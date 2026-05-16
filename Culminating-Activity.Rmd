@@ -7,7 +7,9 @@ author: |
   Kurt Michael Florentino  
   Christian James Gelig  
 date: "May 16, 2026"
-output: pdf_document
+output: 
+  pdf_document:
+     fig_caption: true
 header-includes:
   - \usepackage{booktabs}
   - \usepackage{threeparttable}
@@ -17,7 +19,7 @@ Developer productivity is shaped by complex behavioral and environmental factors
 
 To prepare the data for analysis, the dataset was divided into 80% training data and 20% testing data, while all numerical features underwent z-score standardization to reduce distance bias in the model. Different odd k values ranging from 1 to 31 were evaluated to determine the optimal parameter, with the best performance achieved at k = 3.
 
-The resulting kNN classifier achieved 91% accuracy, along with 91.5% sensitivity, 90.2% specificity, and a 92.3% F1-score. These results confirm kNN is an effective tool for classifying developer productivity, providing data-driven insights to improve modern software workflows.
+The resulting kNN classifier achieved 91% accuracy, along with 91.5% sensitivity, 90.2% specificity, 93.1% precision, and a 92.3% F1-score. These results confirm kNN is an effective tool for classifying developer productivity, providing data-driven insights to improve modern software workflows.
 
 # Chapter 1: Introduction
 
@@ -26,7 +28,7 @@ In today’s fast-paced software development landscape, particularly in artifici
 
 Conventional evaluation methods ranging from subjective performance reviews to simple metrics like lines of code, commit counts, or hours worked often fall short of capturing this complexity (Forsgren et al., 2021). For example, a developer may spend long hours coding but produce lower-quality output due to fatigue, high cognitive load, or constant interruptions. On the other hand, effective use of AI tools, combined with adequate rest and balanced caffeine intake, can significantly improve efficiency and task completion.
 
-With the growing availability of developer activity data, there is an opportunity to adopt more data-driven approaches to better understand and predict productivity. Machine learning techniques, particularly instance-based methods like k-Nearest Neighbors (kNN) offer a practical and interpretable way to analyze these multidimensional relationships without relying on strict assumptions about data distribution.
+With the growing availability of developer activity data, there is an opportunity to adopt more data-driven approaches to better understand and predict productivity. Machine learning techniques, particularly instance-based methods like k-Nearest Neighbors (kNN), offer a practical and interpretable way to analyze these multidimensional relationships without relying on strict assumptions about data distribution.
 
 ## Statement of the Problem
 Developer productivity is difficult to measure accurately. Task outcomes are affected by a combination of behavioral, cognitive, and work-related factors, and most traditional evaluation methods, whether subjective assessments or single isolated metrics,  tend to miss how these factors interact with each other. Even with more developer activity data available today, there is still no widely agreed-upon way to predict task success reliably.
@@ -50,7 +52,7 @@ To build and evaluate a kNN-based classification model that predicts developer t
 - To evaluate the model's performance using standard classification metrics such as accuracy, precision, recall, and F1-score.
 - To assess the viability of kNN as a predictive tool for developer task success by interpreting the evaluation results.
 - To examine how productivity-related factors relate to task success outcomes within the dataset.
-- To observe how changes in key input variables affect the model's prediction accuracy.
+- To examine relationships between key input variables and prediction outcomes.
 - To identify recurring patterns in developer behavior that are associated with successful task completion.
 
 
@@ -77,8 +79,8 @@ This study is significant to researchers and future investigators because it off
 ### Educational Institutions and Students
 This study is significant to educational institutions and students in computer science, information technology, and data science because it illustrates how machine learning techniques can be applied to real-world software engineering problems. 
 
-### Scope and Limitations
-This dataset used for the study is limited to 500 daily entries and focuses on eight productivity-related predictors and one binary outcome, task_success. It uses kNN as the only classification model and measures performance through standard classification metrics. Since no further information is given regarding the full development environment, toolchain, or workflow processes, so the results may not be applicable to all software development settings. The study only uses a single dataset for training the model may cause the model to overfit, following its specific patterns too closely which negatively affects the model’s performance when applied to a different dataset.
+## Scope and Limitations
+This dataset used for the study is limited to 500 daily entries and focuses on eight productivity-related predictors and one binary outcome, task_success. It uses kNN as the only classification model and measures performance through standard classification metrics. Since no further information is given regarding the full development environment, toolchain, or workflow processes, the results may not be applicable to all software development settings. The study only uses a single dataset for training the model, which may cause the model to overfit, following its specific patterns too closely which negatively affects the model’s performance when applied to a different dataset.
 
 \newpage
 # Chapter 2: Review of Related Literature
@@ -92,11 +94,11 @@ Given the increasing availability of productivity-related data from both develop
 
 Thota et al. (2022) conducted a systematic review of machine learning techniques for software quality prediction, highlighting the use of instance-based methods such as k-Nearest Neighbors (kNN), alongside support vector machines and ensemble approaches, for classifying software defects using code metrics and developer-related data. Their findings indicate that these techniques have been widely adopted, with usage rates ranging from 32% to 58%, underscoring their relevance and effectiveness in software analytics and predictive modeling.
 
-Building on this foundation, machine learning algorithms such as k-Nearest Neighbors (kNN) have gained particular attention for their ability to classify outcomes based on similarity among data points. This approach is especially effective in handling non-linear relationships in both classification and regression tasks, as it relies on proximity within a feature space rather than predefined functional forms. However, its performance is highly dependent on proper data preprocessing, particularly the standardization of predictors to ensure unbiased distance-based computations (Hastie et al., 2023).
+Building on this foundation, machine learning algorithms such as k-Nearest Neighbors (kNN) have gained particular attention for their ability to classify outcomes based on similarity among data points. This approach is especially effective in handling non-linear relationships in both classification and regression tasks, as it relies on proximity within a feature space rather than predefined functional forms. However, its performance is highly dependent on proper data preprocessing, particularly the standardization of predictors to ensure unbiased distance-based computations (Hastie et al., 2009).
 
-Studies utilizing kNN have consistently demonstrated its effectiveness in classification tasks where relationships between variables are not explicitly defined. It performs well in structured datasets and can accurately classify outcomes when relevant features are properly selected and scaled. This is further supported by comparative research, which shows that kNN can achieve high predictive accuracy when applied appropriately. For instance, a study conducted in 2023 comparing kNN, support vector machines (SVM), and decision tree algorithms for student activity prediction found that kNN achieved an accuracy ranging from 92% to 94.5% after data scaling, making it highly competitive despite being slightly outperformed by SVM, which reached 95% accuracy (Authors, 2023). These findings reinforce the viability of kNN as a simple yet powerful classification method, capable of delivering competitive results alongside more complex algorithms. Its balance of interpretability and performance makes it particularly suitable for applications involving structured behavioral and productivity data.
+Studies utilizing kNN have consistently demonstrated its effectiveness in classification tasks where relationships between variables are not explicitly defined. It performs well in structured datasets and can accurately classify outcomes when relevant features are properly selected and scaled. This is further supported by comparative research, which shows that kNN can achieve high predictive accuracy when applied appropriately. For instance, a study conducted in 2023 comparing kNN, support vector machines (SVM), and decision tree algorithms for student activity prediction found that kNN achieved an accuracy ranging from 92% to 94.5% after data scaling, making it highly competitive despite being slightly outperformed by SVM, which reached 95% accuracy Wiyono et al. (2020). These findings reinforce the viability of kNN as a simple yet powerful classification method, capable of delivering competitive results alongside more complex algorithms. Its balance of interpretability and performance makes it particularly suitable for applications involving structured behavioral and productivity data.
 
-In the context of developer productivity, this suitability becomes particularly relevant due to the inherently multidimensional nature of the data involved. Prior studies have shown that productivity is influenced by a combination of work habits, cognitive load, environmental conditions, and the use of AI-assisted tools, all of which interact in complex and often non-linear ways. Such characteristics align well with the strengths of kNN, which relies on similarity-based classification rather than rigid assumptions about data distribution (Hastie et al., 2023).
+In the context of developer productivity, this suitability becomes particularly relevant due to the inherently multidimensional nature of the data involved. Prior studies have shown that productivity is influenced by a combination of work habits, cognitive load, environmental conditions, and the use of AI-assisted tools, all of which interact in complex and often non-linear ways. Such characteristics align well with the strengths of kNN, which relies on similarity-based classification rather than rigid assumptions about data distribution (Hastie et al., 2009).
 
 Given that the AI developer productivity dataset integrates diverse behavioral and cognitive factors, kNN provides an effective approach for identifying patterns that distinguish successful from unsuccessful task outcomes. Its ability to leverage structured, scaled data further supports its application in this study, enabling reliable prediction while maintaining interpretability. As a result, kNN is well-positioned to model developer productivity and contribute to a deeper understanding of the factors that influence task success.
 
@@ -160,10 +162,8 @@ text(5.0, 1.4, "k = 1 to 31 (odd)", cex = 0.7, col = "#24292f")
 text(8.5, 2.2, "Task Success",   cex = 0.8, font = 2, col = "#24292f")
 text(8.5, 1.8, "Fail / Success", cex = 0.75, col = "#24292f")
 ```
-This study proposes a predictive framework in which a developer's daily task success outcome is determined by a combination of behavioral, environmental, and workload-related factors. The independent variables, coding hours, coffee intake, distractions, sleep hours, commits, bugs reported, AI usage hours, and cognitive load collectively serve as inputs to the k-Nearest Neighbors (kNN) classification model.
-The kNN algorithm processes these inputs by first standardizing all features through z-score scaling to ensure no single variable disproportionately influences distance calculations. It then classifies each observation by identifying its k nearest neighbors in the training set and assigning the majority class label through a voting mechanism. The optimal value of k is determined by evaluating classification accuracy across all odd values from k = 1 to k = 31.
-The output of the model is a binary prediction of task_success, categorized as either Fail or Success, representing whether a developer achieved their daily productivity goal. Model performance is then evaluated using accuracy, sensitivity, specificity, and F1 score derived from the resulting confusion matrix.
-Unlike causal frameworks that distinguish between moderating, mediating, or confounding variables, this study treats all independent variables as equal predictors. The framework reflects the nature of kNN as a distance-based, non-parametric algorithm that does not assume any directional or hierarchical relationship among features.
+This study proposes a predictive framework in which a developer's daily task success is determined by eight input variables: coding hours, coffee intake, distractions, sleep hours, commits, bugs reported, AI usage hours, and cognitive load. These are fed into a kNN classifier that standardizes all features via z-score scaling before identifying each observation's k nearest neighbors and assigning the majority class label. The optimal k is selected by evaluating all odd values from 1 to 31.
+The model outputs a binary prediction — Fail or Success — representing whether a developer met their daily productivity goal, evaluated using accuracy, sensitivity, specificity, precision, and F1 score. All independent variables are treated as equal predictors, reflecting kNN's non-parametric, distance-based nature, which assumes no directional or hierarchical relationships among features.
 
 \newpage
 # Chapter 3: Methodology
@@ -220,7 +220,7 @@ df <- data.frame(
   ),
   Range = c(
     "0--12 hrs", "0--600 mg", "0--10",
-    "3--10 hrs", "Numeric", "Numeric",
+    "3--10 hrs", "0--13", "0--5",
     "Numeric", "1--10"
   ),
   Type = c(
@@ -266,21 +266,22 @@ Model performance was evaluated using a confusion matrix derived from the kNN cl
 1. Accuracy — proportion of correctly classified observations, computed as (TP + TN) / (TP + TN + FP + FN)
 2. Sensitivity (Recall) — True Positive Rate; proportion of actual successes correctly identified, computed as TP / (TP + FN)
 3. Specificity — True Negative Rate; proportion of actual failures correctly identified, computed as TN / (TN + FP)
-4. F1 Score — harmonic mean of precision and sensitivity, computed as 2TP / (2TP + FP + FN), balancing the trade-off between false positives and false negatives
+4. Precision — proportion of positive predictions that are correct, computed as TP / (TP + FP)
+5. F1 Score — harmonic mean of precision and sensitivity, computed as 2TP / (2TP + FP + FN), balancing the trade-off between false positives and false negatives
 
 ### Machine Learning Models
 The kNN algorithm was applied using the class package in R. The dataset was split into a training set (400 observations, 80%) and a test set (100 observations, 20%) using set.seed(31) for reproducibility.
 
 Prior to model training, all features were standardized using z-score scaling so that high-magnitude variables such as coffee_intake_mg do not disproportionately influence distance calculations over lower-magnitude variables like sleep_hours or cognitive_load. Test set scaling was applied using the mean and standard deviation of the training set to prevent data leakage.
 
-The value of k was tuned by evaluating all odd values from k = 1 to k = 31, with accuracy computed for each. The user-selected k was then used to generate the final confusion matrix and performance metrics. Results were visualized through the following:
+The value of k was tuned by evaluating all odd values from k = 1 to k = 31, with accuracy computed for each. The optimal k value  was then used to generate the final confusion matrix and performance metrics. Results were visualized through the following:
 
 1. Confusion matrix table displaying TP, TN, FP, and FN counts
 2. Accuracy bar chart across all odd k values from 1 to 31 to support optimal k selection
 3. Scatter plot of Coding Hours vs Commits, with points colored by predicted class (Success or Fail) and shaped by prediction correctness
 
 \newpage
-## Chapter 4: Results and Discussion
+# Chapter 4: Results and Discussion
 ### 4.1 Descriptive Statistics
 ```{r desc-stats, echo=FALSE}
 desc_stats <- describe(dev_data[, features])[, c("n", "mean", "sd", "min", "max")]
@@ -295,9 +296,8 @@ knitr::kable(desc_stats,
   kable_styling(latex_options = c("hold_position"), font_size = 11) |>
   row_spec(0, bold = TRUE)
 ```
-Table 2 presents the descriptive statistics for all eight independent variables used in the study. The results indicate considerable variation across features. Coding hours ranged from 0 to 12 hours, with a mean of approximately 6 hours, suggesting a moderate level of daily coding activity among developers in the dataset. Coffee intake showed the widest numerical spread, ranging from 0 to 600 mg, consistent with its role as a continuous behavioral variable. Sleep hours had a mean close to 6 to 7 hours, which is below the commonly recommended 8 hours, and cognitive load averaged around 5 on a 10-point scale, indicating a moderate level of self-reported mental strain across the dataset.
+Table 2 presents the descriptive statistics for all eight independent variables used in the study. The results indicate considerable variation across features. Coding hours ranged from 0 to 12 hours, with a mean of approximately 5 hours, suggesting a moderate level of daily coding activity among developers in the dataset. Coffee intake showed the widest numerical spread, ranging from 0 to 600 mg, consistent with its role as a continuous behavioral variable. Sleep hours had a mean close to 6 to 7 hours, which is below the commonly recommended 8 hours, and cognitive load averaged around 5 on a 10-point scale, indicating a moderate level of self-reported mental strain across the dataset.
 These descriptive patterns suggest that the dataset captures a realistic and varied range of developer behaviors and conditions, providing a sufficient basis for classification modeling.
-Visualization
 
 ### 4.2 Class Distribution
 ```{r class-balance, echo=FALSE}
@@ -311,9 +311,11 @@ knitr::kable(class_table,
   row_spec(0, bold = TRUE)
 ```
 Table 3 presents the distribution of the target variable, task_success. The dataset shows a moderate imbalance between the two classes, with the Success class comprising the majority of observations. Despite this imbalance, it was not severe enough to warrant resampling techniques, and the kNN model was trained and evaluated on the original class proportions. The distribution is noted here as it provides context for interpreting sensitivity and specificity separately, rather than relying solely on overall accuracy.
+\newpage
 
 ### 4.3 Feature Distributions
-```{r histogram, echo=FALSE}
+\begin{center}\textit{Figure 1. Feature Distributions of Independent Variables}\end{center}
+```{r histogram, echo=FALSE, fig.width=8, fig.height=10}
 par(mfrow = c(4, 2), mar = c(4, 4, 3, 1))
 colors <- c("#0969da", "#9a6700", "#cf222e", "#08306b",
             "#1a7f37", "#cf222e", "#0969da", "#57606a")
@@ -330,6 +332,7 @@ for (i in seq_along(features)) {
 }
 par(mfrow = c(1, 1))
 ```
+\newpage
 ```{r barplot, echo=FALSE}
 tb <- table(dev_data$task_success)
 barplot(tb,
@@ -343,8 +346,9 @@ Figure 1 presents the histogram distributions for all eight independent variable
 The bar plot in Figure 2 confirms that task success is the more frequent outcome in the dataset, though both classes are sufficiently represented to support binary classification.
 
 ### 4.4 Boxplot Analysis
-```{r boxplot, echo=FALSE}
-par(mfrow = c(4, 2), mar = c(4, 4, 3, 1))
+\begin{center}\textit{Figure 3. Feature Distributions by Task Success Outcome}\end{center}
+```{r boxplot, echo=FALSE, fig.width=8, fig.height=12, fig.cap="Figure 3. Feature Distributions by Task Success Outcome"}
+par(mfrow = c(4, 2), mar = c(2, 2, 2, 1), oma = c(1, 1, 1, 1))
 for (i in seq_along(features)) {
   boxplot(dev_data[[features[i]]] ~ dev_data$task_success,
           main   = feat_labels[i],
@@ -355,6 +359,7 @@ for (i in seq_along(features)) {
 }
 par(mfrow = c(1, 1))
 ```
+\newpage
 Figure 3 presents boxplots for each independent variable grouped by task success outcome. Notable differences were observed between the Fail and Success groups for several features. Developers who achieved task success tended to record higher coding hours and more commits compared to those who failed. Sleep hours also showed a modest difference, with successful developers reporting slightly higher sleep on average. In contrast, cognitive load and distractions showed overlapping distributions between the two groups, suggesting that these variables alone may be weaker individual predictors of task success, though they still contribute to the model in combination with other features.
 These observations support the premise of using a multi-feature classification approach rather than relying on any single variable.
 
@@ -385,7 +390,7 @@ te_sc  <- scale(te_raw,
                 center = attr(tr_sc, "scaled:center"),
                 scale  = attr(tr_sc, "scaled:scale"))
 ```
-
+\newpage
 ### 4.6 k Selection and Model Tuning
 ```{r k-tuning, echo=FALSE}
 k_vals  <- seq(1, 31, by = 2)
@@ -422,6 +427,7 @@ legend("bottomright",
        fill   = c("#0969da", "#d0d7de"),
        border = NA, bty = "n")
 ```
+\newpage
 Table 4 and Figure 5 present the classification accuracy of the kNN model across all odd values of k from 1 to 31. Accuracy fluctuated across the range of k values, with lower values of k producing higher variance in predictions and higher values producing more stable but potentially over-smoothed results. The optimal value of k was identified as the value yielding the highest accuracy on the test set, which is highlighted in both the table and the bar chart. This systematic evaluation of k ensures that the selected model is not arbitrarily configured and reflects the best-performing configuration within the tested range.
 
 ```{r final-model, echo=FALSE}
@@ -477,7 +483,7 @@ knitr::kable(metrics_table,
 ```
 Table 6 summarizes the performance metrics derived from the confusion matrix. The model achieved an overall accuracy consistent with the upper range reported in comparable kNN classification studies on behavioral datasets. Sensitivity, representing the proportion of actual successes correctly identified, was notably high, indicating the model's strong ability to detect true positive outcomes. Specificity, representing the correct identification of failures, was similarly strong, suggesting that the model does not disproportionately favor one class over the other.
 The F1 score, which balances precision and recall through their harmonic mean, further confirms the overall reliability of the model. A high F1 score in this context indicates that the model maintains a reasonable trade-off between avoiding missed successes and avoiding false alarms.
-These results are consistent with findings from related studies, such as the comparative analysis by Authors (2023), which reported kNN accuracies ranging from 92% to 94.5% on scaled behavioral datasets, reinforcing the validity of this study's approach.
+These results are consistent with findings from related studies, such as the comparative analysis by Wiyono et al. (2020), which reported kNN accuracies ranging from 92% to 94.5% on scaled behavioral datasets, reinforcing the validity of this study's approach.
 
 ### 4.9 Hypothesis Testing
 The study posed the following hypotheses:
@@ -513,7 +519,7 @@ legend("topright",
 ```
 Figure 6 presents a scatter plot of coding hours versus total commits on the test set, with each point colored by predicted class and shaped by prediction correctness. The plot reveals a general trend wherein developers with higher coding hours and commit counts are more frequently predicted as successful, which aligns with the boxplot findings in Section 4.4. Misclassified observations, represented by X markers, are relatively sparse and distributed without a clear systematic pattern, suggesting that the model's errors are not concentrated in any particular region of the feature space. This further supports the overall reliability of the kNN classifier in distinguishing between Fail and Success outcomes across the test set.
 
-## Chapter 5: Conclusion and Recommendations
+# Chapter 5: Conclusion and Recommendations
 ### Conclusion
 This study applied the k-Nearest Neighbors (kNN) algorithm to classify developer task success outcomes using eight productivity-related variables from the AI Developer Productivity Dataset. The descriptive analysis revealed meaningful differences between successful and unsuccessful developers, particularly in coding hours and commit counts, while the correlation analysis confirmed that the selected features were sufficiently distinct to support reliable classification.
 
@@ -521,13 +527,13 @@ The findings suggest that developer task success is associated with multiple fac
 
 The final model, trained on 400 observations and evaluated on 100 test cases, achieved an accuracy exceeding the 90% threshold defined in the study hypothesis. Sensitivity, specificity, precision, and F1 score were all consistent with comparable kNN classification studies. Based on these results, the null hypothesis was rejected, confirming that the kNN algorithm can reliably predict developer task success from productivity-related variables when features are properly scaled and selected.
 
-**Recommendations**
+### Recommendations
 
 1. **Compare Against Other Algorithms**
 Future studies should benchmark kNN against SVM, Random Forest, and Decision Trees using the same dataset to determine whether more complex models offer meaningful performance gains.
 
 2. **Address Class Imbalance**
-If class imbalance is present, resampling techniques such as SMOTE should be explored to prevent the model from disproportionately favoring the majority class.
+Although imbalance was moderate in this dataset, resampling techniques such as SMOTE should be explored to prevent the model from disproportionately favoring the majority class.
 
 3. **Expand the Feature Set**
 Additional variables such as team size, project complexity, or deadline pressure could be incorporated to capture a broader range of factors influencing developer productivity.
@@ -537,28 +543,14 @@ Future research should validate the model on datasets from different development
 
 5. **Integrate Into Practical Tools**
 The model could be integrated into developer productivity dashboards to help organizations identify at-risk developers and provide early interventions before productivity declines.
->>>>>>> eefeae403dbe1a87665edb51dedb708ab28974f9
-
-2. **Address Class Imbalance**
-If class imbalance is present, resampling techniques such as SMOTE should be explored to prevent the model from disproportionately favoring the majority class.
-
-3. **Expand the Feature Set**
-Additional variables such as team size, project complexity, or deadline pressure could be incorporated to capture a broader range of factors influencing developer productivity.
-
-4. **Validate Across Different Datasets**
-Future research should validate the model on datasets from different development environments to assess whether the findings generalize beyond the current dataset.
-
-5. **Integrate Into Practical Tools**
-The model could be integrated into developer productivity dashboards to help organizations identify at-risk developers and provide early interventions before productivity declines.
-
 
 \newpage
-## References
+# References
 Peng, S., Kalliamvakou, E., & Cihon, P. (2023). The impact of AI on developer productivity: Evidence from GitHub Copilot [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2302.06590
 
 Thota, M., & Kumar, R. (2022). Software quality prediction using machine learning techniques: A systematic review. International Journal of Advanced Research in Computer Science, 13(6), 1-10. https://ijarcs.info/index.php/Ijarcs/article/view/6918
 
-Authors. (2023). Comparative study of KNN, SVM and decision tree algorithm for student activity prediction. IJCSaM, 5(1), 1-10. https://iptek.its.ac.id/index.php/ijcsam/article/view/4360
+Wiyono, S., Wibowo, D. S., Hidayatullah, M. F., & Dairoh, D. (2020). Comparative study of KNN, SVM and Decision Tree Algorithm for student’s performance prediction. International Journal of Computing Science and Applied Mathematics, 6(2), 50. https://doi.org/10.12962/j24775401.v6i2.4360
 
 Hicks, C. M., Lee, C. S., & Ramsey, M. (2024). Developer thriving: Four sociocognitive factors that create resilient productivity on software teams. Proceedings of the ACM on Human-Computer Interaction. https://dsl.pubpub.org/pub/dev-thriving/release/1
 
@@ -568,7 +560,9 @@ Singh, A., & Chaudhary, P. (2022). Workplace productivity: A study of behavioral
 
 Aljumah, A. (2022). A robust tuned K-nearest neighbours classifier for software defect prediction. University of Vaasa. https://osuva.uwasa.fi/items/29f6c8f9-7801-4fb2-99c8-2c583b50f5ab
 
-## Appendices
+Hastie, T., Tibshirani, R., & Friedman, J. (2009). The elements of statistical learning: Data mining, inference, and prediction (2nd ed.). Springer.
+
+# Appendices
 Appendix A: Code
 ```{r ref.label=setdiff(knitr::all_labels(), c("conceptual-framework", "independent-variables")), echo=TRUE, eval=FALSE}
 ```
